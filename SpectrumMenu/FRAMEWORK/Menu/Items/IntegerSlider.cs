@@ -25,7 +25,7 @@ public class IntegerSlider : MenuItem
     { }
     #endregion
 
-    public override void Tweak(SpectrumMenu menu)
+    public override void Tweak(SpectrumMenuAbstract menu)
     {
         menu.TweakInt(this.Name, this.GetValue(), this.Min, this.Max, this.DefaultValue, this.SetValue, this.Description);
     }

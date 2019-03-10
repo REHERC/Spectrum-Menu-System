@@ -25,7 +25,7 @@ public class DecimalSlider : MenuItem
     { }
     #endregion
 
-    public override void Tweak(SpectrumMenu menu)
+    public override void Tweak(SpectrumMenuAbstract menu)
     {
         menu.TweakFloat(this.Name, this.GetValue(), this.Min, this.Max, this.DefaultValue, this.SetValue, this.Description);
     }

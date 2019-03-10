@@ -1,31 +1,135 @@
-﻿using Spectrum.API.Interfaces.Systems;
+﻿using System;
+using UnityEngine;
 
-public abstract class SpectrumMenu : SuperMenu
+public class SpectrumMenu : SpectrumMenuAbstract
 {
-    public override string MenuTitleName_ => "Configure Spectrum Plugins";
-    public override string Name_ => "Spectrum Settings";
-    
-    public IManager Manager { get; private set; }
-    
-    public override bool DisplayInMenu(bool isPauseMenu) => true;
+    // The menu panel used to display the GUI
+    public MenuPanel MenuPanel = null;
 
-    public SpectrumMenu()
+    // Just a class to make an update method
+    private SpectrumMenuController controller;
+
+    // Determines if the menu is switching to another page when closing
+    public bool PageSwitching { get; private set; } = false;
+
+    // Menu title
+    public string Title { get; set; }
+
+    // Menu description
+    public string Description { get; set; }
+    
+
+    #region Menu Objects
+    private GameObject TitleLabel()
     {
-        menuBlueprint_ = Menu.menuBlueprint;
+        return PanelObject_.transform.Find("MenuTitleTemplate/UILabel - Title").gameObject;
     }
 
-    public void SetManager(IManager manager)
+    private GameObject DescriptionLabel()
     {
-        Manager = manager;
+        return PanelObject_.transform.Find("MenuTitleTemplate/UILabel - Description").gameObject;
     }
+
+    private GameObject OptionsTable()
+    {
+        return PanelObject_.transform.Find("Options/OptionsTable").gameObject;
+    }
+    #endregion
+
+    // Input manager to handle key presses (previous/next buttons)
+    private InputManager im = null;
+
+    // List of menu entries
+    public MenuTree Entries { get; set; } = new MenuTree();
+
+    // Maximum amount of items per page
+    const int MaxEntriesPerPage = 9;
+
+    // Currently displayed page (index 0 is page 1)
+    public int PageIndex { get; set; } = 0;
+
+    // Number of available pages
+    private int PageCount;
 
     public override void InitializeVirtual()
     {
-        
+        im = G.Sys.InputManager_;
+
+        PageCount = (int)Math.Ceiling(Entries.Count / (float)MaxEntriesPerPage);
+
+        DisplayMenu();
+
+        controller = this.PanelObject_.AddComponent<SpectrumMenuController>();
+        controller.Menu = this;
     }
 
+    private void DisplayMenu()
+    {
+        MenuTree currentTree = Entries.GetItems(MenuItem.GetCurrentMode());
+        for (int i = PageIndex * MaxEntriesPerPage; i < (PageIndex * MaxEntriesPerPage) + MaxEntriesPerPage; i ++)
+        {
+            if (i < currentTree.Count)
+                currentTree[i].Tweak(this);
+            else break;
+        }
+    }
+
+    // On menu closed
     public override void OnPanelPop()
     {
+        controller.Destroy();
+        MenuPanel.Destroy();
+        PanelObject_.Destroy();
+        this.Destroy();
+    }
+    
+    // Update method
+    public void UpdateVirtual()
+    {
+        G.Sys.MenuPanelManager_.SetBottomLeftActionButton(InputAction.MenuPageUp, "PREVIOUS");
+        G.Sys.MenuPanelManager_.SetBottomLeftActionButton(InputAction.MenuPageDown, "NEXT");
+        G.Sys.MenuPanelManager_.SetBottomLeftActionButtonEnabled(InputAction.MenuPageUp, Entries.Count > MaxEntriesPerPage);
+        G.Sys.MenuPanelManager_.SetBottomLeftActionButtonEnabled(InputAction.MenuPageDown, Entries.Count > MaxEntriesPerPage);
+
+        if (Entries.Count > MaxEntriesPerPage)
+        {
+            if (im.GetKeyUp(InputAction.MenuPageUp))
+            {
+                PageIndex -= 1;
+                PageIndex = PageIndex < 0 ? PageCount - 1 : PageIndex > PageCount - 1 ? 0 : PageIndex;
+                PageSwitching = true;
+                MenuPanel.Pop();
+            }
+            if (im.GetKeyUp(InputAction.MenuPageDown))
+            {
+                PageIndex += 1;
+                PageIndex = PageIndex < 0 ? PageCount - 1 : PageIndex > PageCount - 1 ? 0 : PageIndex;
+                PageSwitching = true;
+                MenuPanel.Pop();
+            }
+        }
         
+        Description = $"Page {PageIndex + 1} / {PageCount}";
+        
+        TitleLabel()?.SetActive(true);
+        UILabel TitleLabelObject = TitleLabel().GetComponent<UILabel>();
+        if (TitleLabelObject)
+            TitleLabelObject.text = Title;
+
+        DescriptionLabel()?.SetActive(true);
+        UILabel DescriptionLabelObject = DescriptionLabel().GetComponent<UILabel>();
+        if (DescriptionLabelObject)
+            DescriptionLabelObject.text = Description;
+    }
+}
+
+public class SpectrumMenuController : MonoBehaviour
+{
+    public SpectrumMenu Menu { get; set; }
+
+    void Update()
+    {
+        if (Menu != null && Menu.PanelObject_.activeInHierarchy && Menu.MenuPanel.IsTop_)
+            Menu.UpdateVirtual();
     }
 }

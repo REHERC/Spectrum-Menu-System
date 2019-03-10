@@ -1,21 +1,35 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class Menu
 {
-    public static GameObject menuBlueprint;
-
-    public static MenuTree menuTree = new MenuTree();
-
-    public static string GenerateId()
+    public static GameObject MenuBlueprint { get; set; }
+    
+    public static void ShowMenu(string title, MenuTree entries, SuperMenu parent, int page)
     {
-        Guid g = Guid.NewGuid();
-        string guid = Convert.ToBase64String(g.ToByteArray());
-        guid = guid.Replace("=", "");
-        guid = guid.Replace("+", "");
-        guid = guid.Replace("/", "");
-        guid = guid.Replace("\\", "");
+        foreach (var component in parent.PanelObject_.GetComponents<SpectrumMenu>())
+            component.Destroy();
 
-        return guid;
+        SpectrumMenu menu = parent.PanelObject_.AddComponent<SpectrumMenu>();
+
+        menu.PageIndex = page;
+
+        menu.MenuPanel = MenuPanel.Create(menu.PanelObject_, true, true, false, true, false, false);
+
+        menu.MenuPanel.onPanelPop_ += () =>
+        {
+            if (!G.Sys.MenuPanelManager_.panelStack_.Contains(menu.MenuPanel))
+            {
+                parent.PanelObject_.SetActive(true);
+                if (menu.PageSwitching)
+                    ShowMenu(title, entries, parent, menu.PageIndex);
+            }
+        };
+
+        menu.Title = title;
+        menu.Entries = entries;
+        
+        parent.PanelObject_.SetActive(false);
+
+        G.Sys.MenuPanelManager_.Push(menu.MenuPanel);
     }
 }

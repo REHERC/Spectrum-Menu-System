@@ -5,17 +5,15 @@ public abstract class MenuItem
     public readonly DisplayMode Mode;
     public string Name { get; set; }
     public string Description { get; set; }
-    public readonly string Id = "";
-
+    
     protected MenuItem(DisplayMode mode, string name, string description = "")
     {
-        this.Id = Menu.GenerateId();
         this.Name = name;
         this.Description = description;
         this.Mode = mode;
     }
 
-    public abstract void Tweak(SpectrumMenu menu);
+    public abstract void Tweak(SpectrumMenuAbstract menu);
 
     public enum DisplayMode
     {

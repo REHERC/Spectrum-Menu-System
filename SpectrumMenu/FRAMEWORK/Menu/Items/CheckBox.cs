@@ -16,7 +16,7 @@ public class CheckBox : MenuItem
     { }
     #endregion
 
-    public override void Tweak(SpectrumMenu menu)
+    public override void Tweak(SpectrumMenuAbstract menu)
     {
         menu.TweakBool(this.Name, this.GetValue(), this.SetValue, this.Description);
     }

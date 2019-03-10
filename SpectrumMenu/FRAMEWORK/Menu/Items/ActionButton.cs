@@ -11,7 +11,7 @@ public class ActionButton : MenuItem
     }
     #endregion
     
-    public override void Tweak(SpectrumMenu menu)
+    public override void Tweak(SpectrumMenuAbstract menu)
     {
         menu.TweakAction(this.Name, this.OnClick, this.Description);
     }

@@ -12,13 +12,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Data\MenuTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\ActionButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\CheckBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\InputPrompt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\IntegerSlider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\DecimalSlider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\ListBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\MenuButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\PasswordPrompt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\SubmenuButon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\MenuItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Menu.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\AutoMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\SpectrumMenu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\SpectrumMenuAbstract.cs" />
   </ItemGroup>
 </Project>

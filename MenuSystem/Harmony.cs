@@ -10,7 +10,7 @@ namespace MenuSystem
             Menu.MenuBlueprint = __instance.menuBlueprint_;
 
             __instance.TweakAction("CONFIGURE SPECTRUM PLUGINS", () => {
-                Menu.ShowMenu("Configure Spectrum Plugins", null, __instance, 0);
+                Menu.ShowMenu("Spectrum Plugins", null, __instance, 0);
             });
         }
     }

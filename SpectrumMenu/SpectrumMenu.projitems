@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6e36722d-84ef-4953-a818-3f078e8aad32</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SpectrumMenu</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Data\MenuTree.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\ActionButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\CheckBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\IntegerSlider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\DecimalSlider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\ListBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\Items\MenuButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FRAMEWORK\Menu\MenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Menu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\AutoMenu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\SpectrumMenu.cs" />
+  </ItemGroup>
+</Project>

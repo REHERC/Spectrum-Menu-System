@@ -5,7 +5,13 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuSystem", "MenuSystem\MenuSystem.csproj", "{0374DBAF-B39D-4841-B602-3B8E9FCA415B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SpectrumMenu", "SpectrumMenu\SpectrumMenu.shproj", "{6E36722D-84EF-4953-A818-3F078E8AAD32}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SpectrumMenu\SpectrumMenu.projitems*{0374dbaf-b39d-4841-b602-3b8e9fca415b}*SharedItemsImports = 4
+		SpectrumMenu\SpectrumMenu.projitems*{6e36722d-84ef-4953-a818-3f078e8aad32}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
